@@ -1,16 +1,16 @@
 import pickle
+import os
 
 if __name__ == "__main__":
-    basepath = "/Users/dheerajmekala/Work/Coarse2Fine/data/20news/"
-    dataset = "religion_20news/"
-    pkl_dump_dir = basepath
+    pkl_dump_dir = "/Users/dheerajmekala/Work/WsupLD/data/nyt-coarse/"
+    dataset = "nyt-coarse/"
     xclass_dump_dir = "/Users/dheerajmekala/Work/XClass/data/datasets/" + dataset
+    os.makedirs(xclass_dump_dir, exist_ok=True)
 
-    df = pickle.load(open(pkl_dump_dir + "df_fine.pkl", "rb"))
-    parent_to_child = pickle.load(open(pkl_dump_dir + "parent_to_child.pkl", "rb"))
-    classes = parent_to_child["religion"]
-
-    df = df[df.label.isin(classes)].reset_index(drop=True)
+    df = pickle.load(open(pkl_dump_dir + "df.pkl", "rb"))
+    # parent_to_child = pickle.load(open(pkl_dump_dir + "parent_to_child.pkl", "rb"))
+    classes = list(set(df["label"]))
+    # df = df[df.label.isin(classes)].reset_index(drop=True)
 
     f1 = open(xclass_dump_dir + "classes.txt", "w")
     f2 = open(xclass_dump_dir + "labels.txt", "w")
