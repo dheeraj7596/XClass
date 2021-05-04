@@ -1,14 +1,14 @@
 import pickle
 
 if __name__ == "__main__":
-    basepath = "/Users/dheerajmekala/Work/Coarse2Fine/data/nyt/"
-    dataset = "business/"
+    basepath = "/Users/dheerajmekala/Work/Coarse2Fine/data/20news/"
+    dataset = "religion_20news/"
     pkl_dump_dir = basepath
     xclass_dump_dir = "/Users/dheerajmekala/Work/XClass/data/datasets/" + dataset
 
     df = pickle.load(open(pkl_dump_dir + "df_fine.pkl", "rb"))
     parent_to_child = pickle.load(open(pkl_dump_dir + "parent_to_child.pkl", "rb"))
-    classes = parent_to_child["business"]
+    classes = parent_to_child["religion"]
 
     df = df[df.label.isin(classes)].reset_index(drop=True)
 

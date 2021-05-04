@@ -15,6 +15,7 @@ CUDA_VISIBLE_DEVICES=$GPU python train_text_classifier.py \
   --test_suffix "" \
   --output_dir ${output_dir} \
   --do_train \
+  --do_filter \
   --do_eval \
   --evaluate_during_training \
   --learning_rate 5e-5 \
