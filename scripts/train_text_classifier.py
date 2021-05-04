@@ -112,6 +112,7 @@ def set_seed(args):
 
 def first_ep_filter(args, all_input_ids, all_attention_mask, all_token_type_ids, all_labels, model, tokenizer):
     logger.info("***** Filtering started *****")
+    print("Filtering started")
     train_dataset = TensorDataset(all_input_ids, all_attention_mask, all_token_type_ids, all_labels)
 
     """ Train the model """
@@ -698,6 +699,7 @@ def main():
              "than this will be truncated, sequences shorter will be padded.",
     )
     parser.add_argument("--do_train", action="store_true", help="Whether to run training.")
+    parser.add_argument("--do_filter", action="store_true", help="Whether to do filtering.")
     parser.add_argument("--do_eval", action="store_true", help="Whether to run eval on the test set.")
     parser.add_argument(
         "--evaluate_during_training", action="store_true", help="Rul evaluation during training at each logging step."

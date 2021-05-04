@@ -2,8 +2,8 @@ import pickle
 import os
 
 if __name__ == "__main__":
-    pkl_dump_dir = "/Users/dheerajmekala/Work/WsupLD/data/nyt-coarse/"
-    dataset = "nyt-coarse/"
+    pkl_dump_dir = "/Users/dheerajmekala/Work/WsupLD/data/agnews/"
+    dataset = "agnews/"
     xclass_dump_dir = "/Users/dheerajmekala/Work/XClass/data/datasets/" + dataset
     os.makedirs(xclass_dump_dir, exist_ok=True)
 
