@@ -570,7 +570,7 @@ def evaluate(args, model, tokenizer, prefix=""):
     return results
 
 
-def load_and_cache_examples(args, task, tokenizer, evaluate=False, filter=False, model=None):
+def load_and_cache_examples(args, task, tokenizer, evaluate=False, filter_flag=False, model=None):
     if args.local_rank not in [-1, 0] and not evaluate:
         torch.distributed.barrier()  # Make sure only the first process in distributed training process the dataset, and the others will use the cache
 
@@ -622,7 +622,7 @@ def load_and_cache_examples(args, task, tokenizer, evaluate=False, filter=False,
     else:
         raise ValueError("No other `output_mode` for XNLI.")
 
-    if filter:
+    if filter_flag:
         all_input_ids, all_attention_mask, all_token_type_ids, all_labels = first_ep_filter(args,
                                                                                             all_input_ids,
                                                                                             all_attention_mask,
@@ -857,8 +857,8 @@ def main():
 
     # Training
     if args.do_train:
-        train_dataset = load_and_cache_examples(args, args.task_name, tokenizer, evaluate=False, filter=args.do_filter,
-                                                model=model)
+        train_dataset = load_and_cache_examples(args, args.task_name, tokenizer, evaluate=False,
+                                                filter_flag=args.do_filter, model=model)
         global_step, tr_loss = train(args, train_dataset, model, tokenizer)
         logger.info(" global_step = %s, average loss = %s", global_step, tr_loss)
 
