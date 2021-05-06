@@ -307,11 +307,11 @@ def first_ep_filter(args, all_input_ids, all_attention_mask, all_token_type_ids,
             preds = np.append(preds, logits.detach().cpu().numpy(), axis=0)
             out_label_ids = np.append(out_label_ids, inputs["labels"].detach().cpu().numpy(), axis=0)
 
-        eval_loss = eval_loss / nb_eval_steps
-        if args.output_mode == "classification":
-            preds = np.argmax(preds, axis=1)
-        else:
-            raise ValueError("No other `output_mode` for XNLI.")
+    eval_loss = eval_loss / nb_eval_steps
+    if args.output_mode == "classification":
+        preds = np.argmax(preds, axis=1)
+    else:
+        raise ValueError("No other `output_mode` for XNLI.")
 
     select_inds = []
     for loop_ind in range(len(preds)):
@@ -623,6 +623,7 @@ def load_and_cache_examples(args, task, tokenizer, evaluate=False, filter_flag=F
         raise ValueError("No other `output_mode` for XNLI.")
 
     if filter_flag:
+        print("Before filtering size", all_input_ids.shape)
         all_input_ids, all_attention_mask, all_token_type_ids, all_labels = first_ep_filter(args,
                                                                                             all_input_ids,
                                                                                             all_attention_mask,
@@ -630,6 +631,7 @@ def load_and_cache_examples(args, task, tokenizer, evaluate=False, filter_flag=F
                                                                                             all_labels,
                                                                                             model,
                                                                                             tokenizer)
+        print("After filtering size", all_input_ids.shape)
     dataset = TensorDataset(all_input_ids, all_attention_mask, all_token_type_ids, all_labels)
     return dataset
 
